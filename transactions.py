@@ -36,10 +36,10 @@ def get_transactions_by_month(engine, month, year):
         sql = """SELECT txn_date, txn_id, txn_type_cd, amount, teller_emp_id,
                         execution_branch_id, funds_avail_date, trial104
                  FROM transaction
-                 WHERE EXTRACT(MONTH FROM txn_date) = :month
-                 AND EXTRACT(YEAR FROM txn_date) = :year
+                 WHERE EXTRACT(MONTH FROM txn_date) = %s
+                 AND EXTRACT(YEAR FROM txn_date) = %s
               """
-        return pd.read_sql_query(sql, engine, params={"month": month, "year": year})
+        return pd.read_sql_query(sql, engine, params=(month, year))
     # Handle invalid month/year input by returning a
     # single-row DataFrame filled with -1 values
     print("Invalid month or year")
